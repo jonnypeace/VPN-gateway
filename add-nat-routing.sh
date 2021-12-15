@@ -8,14 +8,14 @@ WG_NET="10.6.0.0/24"
 WG_PORT="51820"
 NORD_NET="10.8.1.0/24"
 SSH="22"
-LOC_NET="192.168.2.61"
+LOC_NET="192.168.0.0/16"
 
 ## IPv4 ##
 $IPT -t nat -I POSTROUTING 1 -o $NORD_FACE -j MASQUERADE
 $IPT -I INPUT 1 -i lo -j ACCEPT
 $IPT -I INPUT 2 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-$IPT -I INPUT 4 -i $IN_FACE -p udp --dport $WG_PORT -s 192.168.0.0/16 -j ACCEPT
-$IPT -I INPUT 5 -i $IN_FACE -p tcp --dport $SSH -s 192.168.0.0/16 -j ACCEPT
+$IPT -I INPUT 4 -i $IN_FACE -p udp --dport $WG_PORT -s $LOC_NET -j ACCEPT
+$IPT -I INPUT 5 -i $IN_FACE -p tcp --dport $SSH -s $LOC_NET -j ACCEPT
 $IPT -I INPUT 7 -m limit --limit 5/min -j LOG --log-prefix "iptables IN denied: " --log-level 7
 
 #$IPT -I FORWARD 1 -m state --state ESTABLISHED,RELATED -j ACCEPT
