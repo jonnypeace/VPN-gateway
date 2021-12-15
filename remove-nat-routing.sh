@@ -17,12 +17,7 @@ $IPT -D INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 $IPT -D INPUT -i $IN_FACE -p udp --dport $WG_PORT -s $LOC_NET -j ACCEPT
 $IPT -D INPUT -i $IN_FACE -p tcp --dport $SSH -s $LOC_NET -j ACCEPT
 $IPT -D INPUT -m limit --limit 5/min -j LOG --log-prefix "iptables IN denied: " --log-level 7
-#$IPT -D FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
-#$IPT -D FORWARD -s $WG_NET -o $NORD_FACE -i $WG_FACE -j ACCEPT
-#$IPT -D FORWARD -d $WG_NET -o $WG_FACE -i $NORD_FACE -j ACCEPT
-#$IPT -D FORWARD -d $WG_NET -i $WG_FACE -j DROP
-#$IPT -D FORWARD -s $WG_NET -i $WG_FACE -j ACCEPT
-#$IPT -D FORWARD -d $WG_NET -i $NORD_FACE -j ACCEPT
+
 $IPT -D FORWARD -i $WG_FACE -o $NORD_FACE -j ACCEPT
 $IPT -D FORWARD -i $NORD_FACE -o $WG_FACE -m state --state RELATED,ESTABLISHED -j ACCEPT
 $IPT -D FORWARD -m limit --limit 5/min -j LOG --log-prefix "iptables FW denied: " --log-level 7
