@@ -18,11 +18,6 @@ $IPT -I INPUT 4 -i $IN_FACE -p udp --dport $WG_PORT -s $LOC_NET -j ACCEPT
 $IPT -I INPUT 5 -i $IN_FACE -p tcp --dport $SSH -s $LOC_NET -j ACCEPT
 $IPT -I INPUT 7 -m limit --limit 5/min -j LOG --log-prefix "iptables IN denied: " --log-level 7
 
-#$IPT -I FORWARD 1 -m state --state ESTABLISHED,RELATED -j ACCEPT
-#$IPT -A FORWARD -d $WG_NET -i $WG_FACE -j DROP
-#$IPT -A FORWARD -s $WG_NET -i $WG_FACE -j ACCEPT
-#$IPT -A FORWARD -d $WG_NET -i $NORD_FACE -j ACCEPT
-
 $IPT -A FORWARD -o $NORD_FACE -i $WG_FACE -j ACCEPT
 $IPT -A FORWARD -o $WG_FACE -i $NORD_FACE -m state --state RELATED,ESTABLISHED -j ACCEPT
 $IPT -A FORWARD -m limit --limit 5/min -j LOG --log-prefix "iptables FW denied: " --log-level 7
