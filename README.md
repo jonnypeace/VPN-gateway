@@ -1,6 +1,6 @@
 # VPN-gateway
 
-This purpose of these scripts is to connect devices on my LAN to a VPN gateway using wireguard.
+The purpose of these scripts is to connect devices on my LAN to a VPN gateway using wireguard.
 
 Originally my plan was to set up a raspberry pi with open-wrt and connect the devices over wifi
 with a stronger wifi dongle, but thought about exploring this option first.
