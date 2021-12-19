@@ -78,7 +78,7 @@ during a period of inactivity.
 
 Create a crontab is optional, but helps keep the connection alive and reliable.
 
-Switch to root user
+Switch to root user...
 sudo su -
 
 Move the nord.sh script to /root (or directory of choice)
@@ -86,8 +86,8 @@ Move the nord.sh script to /root (or directory of choice)
 Make nord.sh executable..
 chmod 700 /root/nord.sh
 
-Crontab (optional)
-Create cron job
+Crontab (optional).
+Create cron job...
 crontab -e
 
 add this to the bottom of the crontab     * * * * * /root/nord.sh
