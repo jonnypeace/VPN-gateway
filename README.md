@@ -25,7 +25,7 @@ However, I've adapated it for forwarding traffic over VPN interfaces wg0 (wiregu
 
 I've also taken a collection of firewall rules gathered from sources on github, and would welcome any critique / additional rules. Since i'm a learning
 Linux System Administrator, and Linux user since 2014, i don't have exposure to Enterprise firewall rules, but all in good time. I have an idea how the TCP
-handshakes work, and the rules collected are mostly all DROP/REJECT, so should work well.
+handshakes work, and the rules collected are all DROP/REJECT, so should work well.
 
 ############################################################################
 
