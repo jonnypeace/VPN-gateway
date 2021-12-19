@@ -27,7 +27,7 @@ I've also taken a collection of firewall rules gathered from sources on github, 
 Linux System Administrator, and Linux user since 2014, i don't have exposure to Enterprise firewall rules, but all in good time. I have an idea how the TCP
 handshakes work, and the rules collected are mostly all DROP/REJECT, so should work well.
 
-#####################################################################################################################################################
+###############################################################################################################
 
 So how it works.....
 
