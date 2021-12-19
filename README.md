@@ -109,7 +109,7 @@ nordvpn set killswitch on
 The script will now work, once the ping fails.
 
 To enable cybersec...
-Run the script /root/nord.sh on
+Run the script...  /root/nord.sh on
 
 The script layout has a specific order it must follow to ensure the firwall rules work as intended. Once nordvpn connects, the wireguard service
 is restarted to allow the firewall rules in the POSTUP & POSTDOWN scripts. If the wireguard service is not restarted, then nordvpn firewall rules will sit on top, and cancel out the wireguard rules (to an extent), but do not fear... the killswitch still works, as i've not modified the OUTPUT rules.
