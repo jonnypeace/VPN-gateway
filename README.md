@@ -5,7 +5,7 @@ The purpose of these scripts is to connect devices on my LAN to a VPN gateway us
 Originally my plan was to set up a raspberry pi with open-wrt and connect the devices over wifi
 with a stronger wifi dongle, but thought about exploring this option first.
 
-The benefit of doing it this way, if we have a server running at home anyway, is you don't need
+The benefit of doing it this way, if we have a server running at home anyway, you don't need
 additional hardware, just the wireguard client/server application. I've also got this running in an 
 Ubuntu VM dedicated to serve only this function. I will be exploring the use of LXC containers
 as well.
