@@ -90,11 +90,9 @@ Crontab (optional)
 Create cron job
 crontab -e
 
-add this to the bottom of the crontab
-"* * * * * /root/nord.sh"
+add this to the bottom of the crontab     * * * * * /root/nord.sh
 
-This will run every minute, but you could change it to every 5 mins etc
-*/5 * * * * /root/nord.sh
+This will run every minute, but you could change it to every 5 mins etc    */5 * * * * /root/nord.sh
 
 Ok, finally the nord.sh script and idea behind how all this works.
 
