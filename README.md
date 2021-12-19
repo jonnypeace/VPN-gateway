@@ -54,6 +54,7 @@ nano -il /etc/wireguard/wg0.conf
 [Interface]
 
 PostUp = /etc/wireguard/helper/add-nat-routing.sh
+
 PreDown = /etc/wireguard/helper/remove-nat-routing.sh
 
 Include these two lines under the interface section, no need to remove anything, just include those lines.
@@ -90,7 +91,7 @@ Create cron job
 crontab -e
 
 add this to the bottom of the crontab
-* * * * * /root/nord.sh
+"* * * * * /root/nord.sh"
 
 This will run every minute, but you could change it to every 5 mins etc
 */5 * * * * /root/nord.sh
