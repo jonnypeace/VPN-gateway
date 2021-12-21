@@ -33,8 +33,8 @@ So how it works.....
 
 I have the nord.sh script running in crontab as root. It checks for internet connectivity (ping), and if no connection is made to the outside world
 then the script will run a set-up process. If you look in the script, it uses the exit code from the ping. If the ping fails the exit code will be 1
-and if the exit code succeeds, the exit code will be 0. Look inside the script for an if statement for $?. You can switch this round, and may well
-want to on initial set up, but before you do, we would want to have our POSTUP and POSTDOWN scripts ready.
+and if the exit code succeeds, the exit code will be 0. Look inside the script for an if statement for $?. So lets get our POSTUP and POSTDOWN 
+wireguard scripts ready first.
 
 I am going to assume you have followed one of the many ways to set up your wireguard server and client. If you run into any difficulty, contact me
 via github.
