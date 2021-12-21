@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Author : Jonny Peace
+# Date : 21/12/2021
 # Manual use...
 # Run with sudo, or root.
 # Run in location, so if in home directory, ~/nord.sh
@@ -11,7 +13,7 @@
 touch /root/nord.log
 
 # Check connectivity. If ping fails, the script will restart nordvpn.
-ping -c 3 google.com
+ping -c 1 google.com
 
 # if ping fails...
 if [ $? = 1 ]; then
