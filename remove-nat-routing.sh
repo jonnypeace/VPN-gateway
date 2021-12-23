@@ -49,3 +49,5 @@ $IPT -D INPUT -p all -m conntrack --ctstate INVALID -j DROP -m comment --comment
 
 # reject new non-syn TCP packets
 $IPT -D INPUT -m conntrack --ctstate NEW -p tcp ! --syn -m comment --comment "TCP: new non-syn packets" -j REJECT --reject-with tcp-reset
+
+$IPT -D OUTPUT -o lo -j ACCEPT
