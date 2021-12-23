@@ -48,3 +48,5 @@ $IPT -I INPUT 7 -p tcp --tcp-flags ALL SYN,RST,ACK,FIN,URG -j DROP -m comment --
 $IPT -I INPUT 7 -p tcp --tcp-flags ALL FIN,URG,PSH -j DROP -m comment --comment "TCP: stealth scan"
 $IPT -I INPUT 7 -p tcp --tcp-flags ALL ALL -j DROP -m comment --comment "TCP: Xmas scan"
 $IPT -I INPUT 7 -p tcp --tcp-flags ALL NONE -j DROP -m comment --comment "TCP: NULL scan"
+
+$IPT -I OUTPUT -o lo -j ACCEPT
