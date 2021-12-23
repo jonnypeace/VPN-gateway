@@ -4,6 +4,8 @@ The purpose of these scripts is to connect devices on my LAN to a VPN gateway us
 
 Originally my plan was to set up a raspberry pi with open-wrt and connect the devices over wifi
 with a stronger wifi dongle, but I couldn't resist exploring this option first.
+I'm aware that I could use static ip gateway for something like this, but to keep things easier
+to switch on and off (the wireguard client), I feel this is more user friendly than switching gateways.
 
 The benefit of doing it this way, if we have a server running at home anyway, you don't need
 additional hardware, just the wireguard client/server application. I've also got this running in an 
