@@ -43,21 +43,28 @@ via github.
 
 Switch user to root.
 
+~~~
 sudo su -
+~~~
 
 Make a helper directory to store POSTUP and POSTDOWN scripts.
 
+~~~
 mkdir -p /etc/wireguard/helper
+~~~
 
 Open your wg0.conf
 
+~~~
 nano -il /etc/wireguard/wg0.conf
+~~~
 
+~~~
 [Interface]
 
 PostUp = /etc/wireguard/helper/add-nat-routing.sh
-
 PreDown = /etc/wireguard/helper/remove-nat-routing.sh
+~~~
 
 Include these two lines under the interface section, no need to remove anything, just include those lines.
 
@@ -65,7 +72,9 @@ Copy the two scripts (add-nat-routing.sh & remove-nat-routing.sh) into the /etc/
 
 Make the scripts executable..
 
+~~~
 chmod 700 /etc/wireguard/helper/add-nat-routing.sh /etc/wireguard/helper/remove-nat-routing.sh
+~~~
 
 Edit the scripts to suit your needs (ip ranges & interfaces) you are using in your wireguard client. 
 
@@ -81,20 +90,31 @@ during a period of inactivity.
 Create a crontab is optional, but helps keep the connection alive and reliable.
 
 Switch to root user...
+
+~~~
 sudo su -
+~~~
 
 Move the nord.sh script to /root (or directory of choice)
 
 Make nord.sh executable..
-chmod 700 /root/nord.sh
 
+~~~
+chmod 700 /root/nord.sh
+~~~
 Crontab (optional).
 Create cron job...
+~~~
 crontab -e
-
-add this to the bottom of the crontab     * * * * * /root/nord.sh
-
-This will run every minute, but you could change it to every 5 mins etc    */5 * * * * /root/nord.sh
+~~~
+add this to the bottom of the crontab     
+~~~
+* * * * * /root/nord.sh
+~~~
+This will run every minute, but you could change it to every 5 mins etc    
+~~~
+*/5 * * * * /root/nord.sh
+~~~
 
 Ok, finally the nord.sh script and idea behind how all this works.
 
@@ -106,13 +126,17 @@ so you don't lock yourself out by mistake. You could run this on openvpn, but th
 
 The first time you run the script, nothing will happen if the script see's an internet connection. If you set the killswitch on....
 
+~~~
 nordvpn set killswitch on
+~~~
 
 The script will now work, once the ping fails.
 
 To enable cybersec...
-Run the script...  /root/nord.sh on
-
+Run the script...  
+~~~
+/root/nord.sh on
+~~~
 The script layout has a specific order it must follow to ensure the firwall rules work as intended. Once nordvpn connects, the wireguard service
 is restarted to allow the firewall rules in the POSTUP & POSTDOWN scripts. If the wireguard service is not restarted, then nordvpn firewall rules will sit on top, and cancel out the wireguard rules (to an extent), but do not fear... the killswitch still works, as i've not modified the OUTPUT rules.
 
