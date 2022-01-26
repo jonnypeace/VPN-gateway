@@ -59,9 +59,8 @@ Open your wg0.conf
 nano -il /etc/wireguard/wg0.conf
 ~~~
 
-~~~
 [Interface]
-
+~~~
 PostUp = /etc/wireguard/helper/add-nat-routing.sh
 PreDown = /etc/wireguard/helper/remove-nat-routing.sh
 ~~~
