@@ -115,6 +115,17 @@ sed -i 's|ens18|<b>ens19</b>|g' etc.iptables.rules.v4
 </pre>
 
 replace the 10.10.0.0/24 (in this sed command) with your lan address subnet.
+WARNING: This is important to get right, as this rule whitelists you from the firewall, and will allow SSH/wireguard access
+WARNING: A subnet from the ip address identified from the ip a command above (in bold), would equate to...
+
+~~~
+192.168.2.10/24 = 192.168.2.0/24 or 192.168.0.0/16 (/16 will provide more addresses than /24)
+
+For a better understanding, maybe have a look here. https://www.cloudflare.com/en-gb/learning/network-layer/what-is-a-subnet/
+
+Home lans usually fall somewhere in the 192.168.0.0/16 range.
+~~~
+
 <pre>
 sed -i 's|192.168.0.0/16|<b>10.10.0.0/24</b>|g' etc.iptables.rules.v4
 </pre>
@@ -129,15 +140,43 @@ Now use this ip to replace (10.10.0.0/32) with the ip address in the from the ou
 sed -i 's|123.123.123.123/32|<b>10.10.0.0/32</b>|g' etc.iptables.rules.v4
 </pre>
 
-Copy the rules to directory
+rules should be good now, so copy them to the correct directory, correctly labelled.
 ~~~
 cp etc.iptables.rules.v4 /etc/iptables/rules.v4
 ~~~
 
-~~~
-
-~~~
-run the script provided and choose the default N (or just press enter without typing anything). This will restore IP tables
+If we make these rules live, we can make them persistent afterwards, so, lets run the script provided and choose the
+default N (or just press enter without typing anything).
+WARNING - If your LAN address is wrong, this will lock you out of SSH
 ~~~
 ./ipRes.sh
 ~~~
+
+Try pinging google
+~~~
+ping -c1 google.com
+~~~
+
+If the ping was successful install iptables-persistent & follow the screen prompt. It will ask to save your current iptables, and it should be safe to do so.
+~~~
+apt install iptables-persistent
+~~~
+
+If you are having difficulty connecting to the outside with your vpn, check your service. Replace uk2161 with the
+server config you chose above.
+Some commands to try below
+~~~
+systemctl status openvpn@uk2161.service
+systemctl enable openvpn@uk2161.service
+systemctl start openvpn@uk2161.service
+~~~
+If the service is active & enabled it's probably your firewall rules.
+~~~
+This will flush your rules.
+iptables -F
+~~~
+Try ping now
+~~~
+ping -c1 google.com
+~~~
+If there are still issues with iptables flushed, then there's maybe a problem with the openvpn config, or nordvpn server, and the best i can offer at this point is to go through the start of this readme and try again, with another nordvpn server.
