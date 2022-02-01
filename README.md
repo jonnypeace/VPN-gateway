@@ -188,6 +188,10 @@ curl ifconfig.co ; curl ifconfig.co/city ; curl ifconfig.co/country
 
 - FIREWALL RULES AND KILLSWITCH
 
+Make sure your root
+~~~
+sudo su -
+~~~
 Lets clone this repo on the gateway, change directory, and provide necessary permissions for the scripts.
 ~~~
 mkdir -p $HOME/git && cd $HOME/git
