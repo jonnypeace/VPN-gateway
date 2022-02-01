@@ -188,6 +188,20 @@ curl ifconfig.co ; curl ifconfig.co/city ; curl ifconfig.co/country
 
 - FIREWALL RULES AND KILLSWITCH
 
+Ok, i'll get this out of the way first. Wireguard clients (mobile devices/desktops) themselves don't have a killswitch but the wireguard application tends to hang your connection. I've never tested how long this hangs for, BUT there are ways to check.
+Android devices : Connections > More connection settings > VPN > settings icon > Always-on VPN & Block connections without VPN.
+Windows devices : Not sure, but like i say, the wireguard app already hangs your connection. You could run wireshark and run some packet capture, or a traceroute alternative for windows, or ping google.com should confirm 100% packet loss.
+Linux Desktop : Once you're finished this tutorial, and have linux desktop connected. Shutdown the vpn-gateway, run the below command, nothing appears to escape. If you run this command before and after you'll see what it should look like. You can also try ping, and it will confirm 100% packet loss.
+~~~
+traceroute 8.8.8.8
+
+or
+
+ping -c1 8.8.8.8
+~~~
+
+Ok back to the VPN-Gateway Firewall rules & Killswitch
+
 Make sure your root
 ~~~
 sudo su -
@@ -286,6 +300,27 @@ If the ping was successful install iptables-persistent & follow the screen promp
 ~~~
 apt install iptables-persistent
 ~~~
+
+- WIREGUARD CLIENT LINUX DESKTOP
+
+Make sure wireguard and resolvconf are installed
+~~~
+sudo apt install wireguard resolvconf
+~~~
+With your user config that you copied and pasted the contents with, or were able to copy from the server directly, lets move this into the wireguard config directory and get this going. Lets assume you copied this .conf file into your home directory.
+~~~
+sudo mv $HOME/EDITME.conf /etc/wireguard/wg0.conf
+~~~
+and to bring the connection up, or down
+~~~
+sudo wg-quick down wg0
+sudo wg-quick up wg0
+___
+This command shows the status
+~~~
+sudo wg
+~~~
+
 If everything is working up to this point, we should be good.
 You can test further for DNS leaks. For the client side, I often use https://www.dnsleaktest.com/
 
