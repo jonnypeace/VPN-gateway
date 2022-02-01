@@ -35,7 +35,7 @@ sudo su -
 ~~~
 Install openvpn and unzip and change directories
 ~~~
-apt install openvpn unzip
+apt install openvpn unzip net-tools
 cd /etc/openvpn
 ~~~
 Grab the server list from nordvpn. Check NordVPN website incase this link changes.
@@ -69,7 +69,6 @@ password123
 </pre>
 and change the permissions so only root can read it:
 ~~~
-nano /etc/openvpn/auto-auth.txt
 chmod 400 /etc/openvpn/auto-auth.txt
 ~~~
 we need to move uk2161.nordvpn.com.udp.ovpn into a config in the etc/openvpn directory
@@ -84,6 +83,8 @@ Lastly, reboot
 ~~~
 reboot
 ~~~
+on boot, lets check our ip
+
 
 Firewall rules for killswitch
 
