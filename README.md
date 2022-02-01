@@ -61,8 +61,10 @@ We're looking for text containing "auth-user-pass" and replacing it with "auth-u
 sed -i 's|auth-user-pass|auth-user-pass /etc/openvpn/auto-auth.txt|' uk2161.nordvpn.com.udp.ovpn
 ~~~
 Enter your credentials into /etc/openvpn/auto-auth.txt i.e. These credentials will be found in your nordvpn account dashboard.
+<pre>
 jonny
 password123
+</pre>
 and change the permissions so only root can read it:
 ~~~
 nano /etc/openvpn/auto-auth.txt
