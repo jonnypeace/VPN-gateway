@@ -310,6 +310,27 @@ If the ping was successful install iptables-persistent & follow the screen promp
 apt install iptables-persistent
 ~~~
 
+- CRONTAB TO MONITOR CONNECTION AND RESTART SERVICE IF IT DROPS
+
+Ok, the openvpn service connection can drop from time to time on the VPN-gateway, so lets monitor it and restart the service to keep it live.
+First, lets copy the script into root home directory, we should still be in the vpn-gateway github directory and still be root.
+~~~
+cp openvpn.sh /root/
+~~~
+Modify the systemctl service in this script to match yours "EDITME". Ignore if you've decided to use the same config as me.
+~~~
+sed -i 's|openvpn@uk2161.service|openvpn@EDITME.service|g' /root/openvpn.sh
+~~~
+lets open crontab
+~~~
+crontab -e
+~~~
+At the bottom, type in something like this so the script checks if the connection is live each minute.
+~~~
+* * * * * /root/openvpn.sh
+~~~
+Look here https://crontab.guru/every-5-minutes for an easy way to schedule your cron jobs.
+
 - WIREGUARD CLIENT LINUX DESKTOP
 
 Make sure wireguard and resolvconf are installed
