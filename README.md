@@ -258,6 +258,7 @@ sed -i 's|ens18|<b>ens7</b>|g' etc.iptables.rules.v4
 </pre>
 
 WARNING: This is important to get right, as this rule whitelists your Lan from the firewall, and will allow SSH/wireguard access
+
 SUBNET HELP: A subnet from the ip address identified from the command above (in bold), would equate to...
 ~~~
 192.168.1.111/24 = 192.168.1.0/24 or 192.168.0.0/16 (/16 will provide more addresses than /24)
@@ -331,11 +332,12 @@ sudo wg
 
 If everything is working up to this point, we should be good.
 You can test further for DNS leaks. For the client side, I often use https://www.dnsleaktest.com/
+
 There are ways which i'll let you search online, for checking dnsleaks in the terminal.
 
 - VPN-Gateway SERVER SIDE TROUBLESHOOTING
 
-First of all, check with with ping
+First of all, check with ping
 ~~~
 ping -c1 google.com
 ~~~
