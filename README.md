@@ -156,10 +156,15 @@ WARNING - If your LAN address is wrong, this will lock you out of SSH
 ~~~
 ./ipRes.sh
 ~~~
+Check rules are in place
+~~~
+iptables -vL --line-numbers
+~~~
 
-Try pinging google
+Try pinging google & checking our IP
 ~~~
 ping -c1 google.com
+curl ifconfig.co ; curl ifconfig.co/city ; curl ifconfig.co/country
 ~~~
 
 If the ping was successful install iptables-persistent & follow the screen prompt. It will ask to save your current iptables, and it should be fine to do so.
@@ -174,6 +179,7 @@ Some commands to try below
 systemctl status openvpn@uk2161.service
 systemctl enable openvpn@uk2161.service
 systemctl start openvpn@uk2161.service
+systemctl restart openvpn@uk2161.service
 ~~~
 If the service is active & enabled it's probably your firewall rules.
 ~~~
