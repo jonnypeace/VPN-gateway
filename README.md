@@ -107,7 +107,7 @@ ip a
 
 replace the 10.10.0.0 (in this sed command) with your lan address subnet.
 <pre>
-sed -i 's|192.168.0.0/16|<b>10.10.0.0/24</b>|' etc.iptables.rules.v4
+sed -i 's|192.168.0.0/16|<b>10.10.0.0/24</b>|g' etc.iptables.rules.v4
 </pre>
 
 Copy the rules to directory
