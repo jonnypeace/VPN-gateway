@@ -90,6 +90,12 @@ curl ifconfig.co ; curl ifconfig.co/city ; curl ifconfig.co/country
 
 - Firewall rules for killswitch
 
+Let clone this repo on the gateway.
+~~~
+mkdir -p $HOME/git && cd $HOME/git
+git clone https://github.com/jonnypeace/VPN-gateway.git && cd VPN-gateway
+~~~
+
 I've put in some firewall rules that can be copied to /etc/iptables
 This might not work well with UFW, i find it better to keep things simple and choose one over the other.
 If you are using ufw, you might want to disable it, and flush the iptable rules, but for the purpose of this tutorial,
