@@ -50,7 +50,7 @@ Below command will include the private key in the wgo.conf.
 ~~~
 echo "PrivateKey = $(cat privatekey)" >> wg0.conf
 ~~~
-We need to uncomment (#) this line in /etc/sysctl.conf and update systctl
+We need to uncomment (#) this line in /etc/sysctl.conf and update systctl. No edit necessary
 ~~~
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
 sysctl -p
@@ -212,16 +212,29 @@ run this command:
     ip route list table main default
 
 snippet of the output:
-default via 192.168.1.1 dev <b>ens7</b> proto dhcp src <b>192.168.2.101</b> metric 100
+default via 192.168.1.1 dev <b>ens7</b> proto dhcp src <b>192.168.1.111</b> metric 100
 
+if this doesn't work, use..
+  ip a
+
+snippet of ip a
+2: <b>ens7</b>: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:56 brd ff:ff:ff:ff:ff:ff
+    inet <b>192.168.1.111/24</b> brd 192.168.2.255 scope global ens7
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5054:ff:fe12:3456/64 scope link 
+       valid_lft forever preferred_lft forever
 </pre>
 
-replace the interface ens30 for one that is on your system.. output from above command was ens7
+replace "EDITME" with the correct interface on your system.. i.e. the output from above command was ens7
 <pre>
-sed -i 's|ens18|<b>ens30</b>|g' etc.iptables.rules.v4
+sed -i 's|ens18|<b>EDITME</b>|g' etc.iptables.rules.v4
+
+If my interface is ens7
+sed -i 's|ens18|<b>ens7|g' etc.iptables.rules.v4
 </pre>
 
-replace the 10.10.0.0/24 (in this sed command) with your lan address subnet.
+replace "EDITME" (in this sed command below) with your lan address subnet.
 WARNING: This is important to get right, as this rule whitelists you from the firewall, and will allow SSH/wireguard access
 SUBNET HELP: A subnet from the ip address identified from the command above (in bold), would equate to...
 ~~~
@@ -231,9 +244,9 @@ For a better understanding, maybe have a look here. https://www.cloudflare.com/e
 
 Home lans usually fall somewhere in the 192.168.0.0/16 range.
 ~~~
-Now lets replace the 10.10.0.0/24 (in this sed command) with your lan address subnet.
+Now lets replace the "EDITME" (in this sed command) with your lan address subnet. If you're happy with 192.168.0.0/16, then skip this part, as no sed edit will be necessary
 <pre>
-sed -i 's|192.168.0.0/16|<b>10.10.0.0/24</b>|g' etc.iptables.rules.v4
+sed -i 's|192.168.0.0/16|<b>EDITME</b>|g' etc.iptables.rules.v4
 </pre>
 
 We need the nordvpn IP address we're connecting to in our uk config file, so...
@@ -241,12 +254,12 @@ We need the nordvpn IP address we're connecting to in our uk config file, so...
 grep "^remote" /etc/openvpn/uk2161.conf | awk 'NR==1{print $2}'
 ~~~
 
-Now use this ip to replace (10.10.0.0/32) with the ip address in the from the output above
+Now use this ip to replace "EDITME" 
 <pre>
-sed -i 's|123.123.123.123/32|<b>10.10.0.0/32</b>|g' etc.iptables.rules.v4
+sed -i 's|123.123.123.123/32|<b>EDITME</b>|g' etc.iptables.rules.v4
 </pre>
 
-rules should be good now, so copy them to the correct directory, correctly labelled.
+rules should be good now, so copy them to the correct directory, and correctly labelled.
 ~~~
 mkdir -p /etc/iptables
 cp etc.iptables.rules.v4 /etc/iptables/rules.v4
@@ -274,7 +287,7 @@ If the ping was successful install iptables-persistent & follow the screen promp
 apt install iptables-persistent
 ~~~
 
-If you are having difficulty connecting to the outside with your vpn, check your service. Replace uk2161 with the
+If you are having difficulty connecting to the outside with your vpn, check your systemctl service. Replace uk2161 with the
 server config you chose above.
 Some commands to try below
 ~~~
