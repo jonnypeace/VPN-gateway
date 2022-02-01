@@ -307,11 +307,11 @@ Make sure wireguard and resolvconf are installed
 ~~~
 sudo apt install wireguard resolvconf
 ~~~
-With your user config that you copied and pasted the contents with, or were able to copy from the server directly, lets move this into the wireguard config directory and get this going. Lets assume you copied this .conf file into your home directory.
+With your user config that you copied/pasted the contents, or were able to copy from the server directly, lets move this into the Desktop wireguard config directory and get this going. Lets assume you copied this .conf file into your desktop home directory.
 ~~~
 sudo mv $HOME/EDITME.conf /etc/wireguard/wg0.conf
 ~~~
-and to bring the connection up, or down
+An easy way to bring the connection up or down
 ~~~
 sudo wg-quick down wg0
 sudo wg-quick up wg0
@@ -323,8 +323,16 @@ sudo wg
 
 If everything is working up to this point, we should be good.
 You can test further for DNS leaks. For the client side, I often use https://www.dnsleaktest.com/
+There are ways which i'll let you search online, for checking dnsleaks in the terminal.
 
-If you are having difficulty connecting to the outside with your vpn, check your systemctl service. Replace uk2161 with the
+- VPN-Gateway SERVER SIDE TROUBLESHOOTING
+
+First of all, check with with ping
+~~~
+ping -c1 google.com
+~~~
+
+If you are having difficulty connecting to the outside with your vpn, check your VPN-gateway systemctl service. Replace uk2161 with the
 server config you chose above.
 Some commands to try below
 ~~~
@@ -352,9 +360,21 @@ If problems still persist, you could go through the start of this readme and try
 
 You could also flush iptables then save using the script provided (enter y at the prompt) so you start over, and upon reboot, you will have no firewall rules.
 ~~~
+systemctl disable openvpn@uk2161.service
 iptables -F
 ./ipRes.sh
 reboot
 ~~~
+If no internet after the above, send me a message with error messages. There could also be DNS issues, which you could check by...
+~~~
+If this works
+ping -c1 8.8.8.8
+
+and this doesn't
+ping -c1 google.com
+
+then it's probably DNS
+~~~
+
 
 Hope all went well & Happy VPN-Gatewaying :)
