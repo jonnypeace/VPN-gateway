@@ -24,12 +24,43 @@ Linux System Administrator, and Linux user since 2014, i don't have exposure to 
 
 ############################################################################
 
-So how it works.....
 
-I am going to assume you have followed one of the many ways to set up your wireguard server and client. If you run into any difficulty, contact me
-via github. I might include a section here for wireguard in the future. I do have a script to set up new users in my bashscripts repo which might help, but i'm looking at improving this script in the future as well.
+Log into your server and Switch user to root. and install wireguard
+~~~
+sudo su
+apt install wireguard
 
-Log into your server and Switch user to root.
+cd /etc/wireguard/
+umask 077; wg genkey | tee privatekey | wg pubkey > publickey
+
+echo "PrivateKey = $(cat privatekey)" >> wg0.conf
+
+sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
+
+sysctl -p
+
+ip route list default
+
+systemctl enable wg-quick@wg0
+systemctl status wg-quick@wg0
+
+wget https://raw.githubusercontent.com/jonnypeace/bashscripts/main/wireguardadduser.sh
+chmod 700 wireguardadduser.sh 
+history
+sed -i 's|DNS = 9.9.9.9|DNS = 103.86.96.100, 103.86.99.100|g' wireguardadduser.sh
+
+ip route list default | cut -d " " -f9
+
+sed -i "s|Endpoint = MYDNS.ORMY.IP|Endpoint = HOSTNAMEorIPofGATEWAY|g" wireguardadduser.sh 
+sed -i "s|PublicKey = MYPUBKEY|PublicKey = $(cat publickey)|g" wireguardadduser.sh 
+
+./wireguardadduser.sh 
+
+cat /etc/wireguard/wg0.conf
+cat /etc/wireguard/configs/jonny.conf
+This one needs copied to the desktop or mobile device. You can copy/paste the contents if no other means of getting
+the file off the server.
+~~~
 ~~~
 sudo su -
 ~~~
