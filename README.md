@@ -8,12 +8,12 @@ I'm aware that I could use static ip gateway for something like this, but to kee
 to switch on and off (the wireguard client), I feel this is more user friendly than switching gateways.
 
 The benefit of doing it this way, if we have a server running at home anyway, you don't need
-additional hardware (wifi access points for the server), just the wireguard client/server application. I've also got this running in an 
-Ubuntu VM dedicated to serve only this function. I will be exploring the use of LXC containers
-as well.
+additional hardware (wifi access points for the server), just the wireguard client/server application. I've got this running in an 
+Ubuntu VM, on a proxmox server, and this ubuntu VM is dedicated to serve only this function. I will be exploring the use of LXC containers
+as well, but VM's are easier.
 
 WARNING : 
-This runs strictly iptables only, and doesn't take into account nftables or UFW or firewalld.
+This runs strictly iptables only, and doesn't take into account nftables or UFW or firewalld. Also, As much as i think this works, I am just as capable as the next person to overlook something, so just be wary whatever your activity is.
 
 So, a quick flow diagram....
 
