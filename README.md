@@ -90,10 +90,11 @@ curl ifconfig.co ; curl ifconfig.co/city ; curl ifconfig.co/country
 
 - Firewall rules for killswitch
 
-Let clone this repo on the gateway.
+Lets clone this repo on the gateway, change directory, and provide necessary permissions for the scripts.
 ~~~
 mkdir -p $HOME/git && cd $HOME/git
 git clone https://github.com/jonnypeace/VPN-gateway.git && cd VPN-gateway
+chmod 700 ipRes.sh openvpn.sh
 ~~~
 
 I've put in some firewall rules that can be copied to /etc/iptables
