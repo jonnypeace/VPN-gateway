@@ -286,6 +286,8 @@ If the ping was successful install iptables-persistent & follow the screen promp
 ~~~
 apt install iptables-persistent
 ~~~
+If everything is working up to this point, we should be good.
+You can test further for DNS leaks. For the client side, I often use https://www.dnsleaktest.com/
 
 If you are having difficulty connecting to the outside with your vpn, check your systemctl service. Replace uk2161 with the
 server config you chose above.
