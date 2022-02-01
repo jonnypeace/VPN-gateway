@@ -14,9 +14,9 @@ nc -zw1 google.com 443
 # if nc fails...
 if [ $? != 0 ]; then
  echo "Ping failed, trying to reconnect..."
- systemctl restart openvpn@xyz123.service
+ systemctl restart openvpn@uk2161.service
  if [ $? != 0 ]; then
-	 echo "openvpn@nl914.service unable to restart" >> /root/vpn.log;
+	 echo "openvpn@uk2161.service unable to restart" >> /root/vpn.log;
  fi
  date >> /root/vpn.log && echo -e "\tConnection re-established" >> /root/vpn.log; else
  echo "Connection already established"
