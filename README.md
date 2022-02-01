@@ -8,29 +8,26 @@ I'm aware that I could use static ip gateway for something like this, but to kee
 to switch on and off (the wireguard client), I feel this is more user friendly than switching gateways.
 
 The benefit of doing it this way, if we have a server running at home anyway, you don't need
-additional hardware, just the wireguard client/server application. I've also got this running in an 
+additional hardware (wifi access points for the server), just the wireguard client/server application. I've also got this running in an 
 Ubuntu VM dedicated to serve only this function. I will be exploring the use of LXC containers
 as well.
 
 WARNING : 
-This runs strictly iptables only, and doesn't take into account nftables or UFW.
+This runs strictly iptables only, and doesn't take into account nftables or UFW or firewalld.
 
 So, a quick flow diagram....
 
 Phone/pc device with wireguard client >> VPN Gateway, with wireguard server traffic coming in >> VPN gateway with NORD VPN traffic going out.
 
-Why wireguard? I find the application fast and think it's brilliant. I regularly use this in cloud servers as well.
-
 I've taken a collection of firewall rules gathered from sources on github, and would welcome any critique / additional rules. Since i'm a learning
-Linux System Administrator, and Linux user since 2014, i don't have exposure to Enterprise firewall rules, but all in good time. The rules collected are all DROP/REJECT and i'll be honest, if you use my iptables rules, they never get touched. I suppose they might be more useful in a cloud VPS where there's
-no hardware firewall between the server and internet.
+Linux System Administrator, and Linux user since 2014, i don't have exposure to Enterprise firewall rules, but all in good time. The rules collected are all DROP/REJECT and i'll be honest, if you use my iptables rules, they never get touched so some of them could probably be removed. I suppose they might be more useful in a cloud VPS where there's no hardware firewall between the server and internet.
 
 ############################################################################
 
 So how it works.....
 
 I am going to assume you have followed one of the many ways to set up your wireguard server and client. If you run into any difficulty, contact me
-via github.
+via github. I might include a section here for wireguard in the future. I do have a script to set up new users in my bashscripts repo which might help, but i'm looking at improving this script in the future as well.
 
 Log into your server and Switch user to root.
 ~~~
@@ -56,18 +53,17 @@ for the purposes of this readme, i'll select uk2161.nordvpn.com.udp.ovpn
 cd /etc/openvpn/ovpn_udp
 ls uk*
 ~~~
-edit uk2161.nordvpn.com.udp.ovpn file
-~~~
-nano uk2161.nordvpn.com.udp.ovpn
-~~~
+
+In this tutorial, we could use nano/vi/vim to edit files, but for a change, i figured lets do it the sed way for most of it. Feel free to edit with the editor of your choice.
+
 We're looking for text containing "auth-user-pass" and replacing it with "auth-user-pass /etc/openvpn/auto-auth.txt" in this file uk2161.nordvpn.com.udp.ovpn
 ~~~
 sed -i 's|auth-user-pass|auth-user-pass /etc/openvpn/auto-auth.txt|' uk2161.nordvpn.com.udp.ovpn
 ~~~
-Enter your credentials into /etc/openvpn/auto-auth.txt i.e.
-user
-pass
-and change the permissions so only root can read it.
+Enter your credentials into /etc/openvpn/auto-auth.txt i.e. These credentials will be found in your nordvpn account dashboard.
+jonny
+password123
+and change the permissions so only root can read it:
 ~~~
 nano /etc/openvpn/auto-auth.txt
 chmod 400 /etc/openvpn/auto-auth.txt
@@ -94,8 +90,8 @@ i'll assume fresh install of Ubuntu with ufw disabled (and never been run).
 
 We'll need to edit the rules to match your system and not lock you out, so...
 replace ens18 with your network interface, which can be found using...
-<pre>
 
+<pre>
 run this command:
     ip a
 
@@ -109,15 +105,14 @@ snipper of the output:
        valid_lft forever preferred_lft forever
 </pre>
 
-replace the interface ens19 for one that is on your system
+replace the interface ens30 for one that is on your system
 <pre>
-sed -i 's|ens18|<b>ens19</b>|g' etc.iptables.rules.v4
+sed -i 's|ens18|<b>ens30</b>|g' etc.iptables.rules.v4
 </pre>
 
 replace the 10.10.0.0/24 (in this sed command) with your lan address subnet.
 WARNING: This is important to get right, as this rule whitelists you from the firewall, and will allow SSH/wireguard access
-WARNING: A subnet from the ip address identified from the ip a command above (in bold), would equate to...
-
+SUBNET HELP: A subnet from the ip address identified from the command above (in bold), would equate to...
 ~~~
 192.168.2.10/24 = 192.168.2.0/24 or 192.168.0.0/16 (/16 will provide more addresses than /24)
 
@@ -125,7 +120,7 @@ For a better understanding, maybe have a look here. https://www.cloudflare.com/e
 
 Home lans usually fall somewhere in the 192.168.0.0/16 range.
 ~~~
-
+Now lets replace the 10.10.0.0/24 (in this sed command) with your lan address subnet.
 <pre>
 sed -i 's|192.168.0.0/16|<b>10.10.0.0/24</b>|g' etc.iptables.rules.v4
 </pre>
@@ -157,7 +152,7 @@ Try pinging google
 ping -c1 google.com
 ~~~
 
-If the ping was successful install iptables-persistent & follow the screen prompt. It will ask to save your current iptables, and it should be safe to do so.
+If the ping was successful install iptables-persistent & follow the screen prompt. It will ask to save your current iptables, and it should be fine to do so.
 ~~~
 apt install iptables-persistent
 ~~~
@@ -179,4 +174,4 @@ Try ping now
 ~~~
 ping -c1 google.com
 ~~~
-If there are still issues with iptables flushed, then there's maybe a problem with the openvpn config, or nordvpn server, and the best i can offer at this point is to go through the start of this readme and try again, with another nordvpn server.
+If there are still issues after iptables flushed, then there's maybe a problem with the openvpn config/credentials, or nordvpn server, and the best i can offer at this point is to go through the start of this readme and try again, with another nordvpn server.
