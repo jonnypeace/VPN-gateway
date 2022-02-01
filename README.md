@@ -62,6 +62,8 @@ sed -i 's|auth-user-pass|auth-user-pass /etc/openvpn/auto-auth.txt|' uk2161.nord
 ~~~
 Enter your credentials into /etc/openvpn/auto-auth.txt i.e. These credentials will be found in your nordvpn account dashboard.
 <pre>
+nano /etc/openvpn/auto-auth.txt
+
 jonny
 password123
 </pre>
