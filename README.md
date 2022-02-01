@@ -42,7 +42,7 @@ Create new file and paste this into it.
 Address = 10.6.0.1/24
 ListenPort = 51820
 ~~~
-Below command will include the pricate key in the wgo.conf.
+Below command will include the private key in the wgo.conf.
 ~~~
 echo "PrivateKey = $(cat privatekey)" >> wg0.conf
 ~~~
@@ -52,9 +52,10 @@ We need to uncomment (#) this line in /etc/sysctl.conf and update systctl
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
 sysctl -p
 ~~~
-By now, we can enable wireguard service.
+By now, we can enable& start wireguard service.
 ~~~
 systemctl enable wg-quick@wg0
+systemctl start wg-quick@wg0
 systemctl status wg-quick@wg0
 ~~~
 This is a script from my bashscripts repository, which will help us add new users. 
@@ -63,22 +64,49 @@ Also change permissions so the script can run.
 wget https://raw.githubusercontent.com/jonnypeace/bashscripts/main/wireguardadduser.sh
 chmod 700 wireguardadduser.sh 
 ~~~
-In this script we can update our DNS to use NordVPN
+In this script we can update our DNS to use NordVPN - this is client side only. 
 ~~~
 sed -i 's|DNS = 9.9.9.9|DNS = 103.86.96.100, 103.86.99.100|g' wireguardadduser.sh
+~~~
+To update the NordVPN dns on the server, i use netplan yaml to configure.
+~~~
+nano /etc/netplan/00-installer-config.yaml # (your yaml might be named differently)
+
+Spacing is quite important in yaml, and it should look something like this.
+
+# This is the network config written by 'subiquity'
+network:
+  ethernets:
+    ens3:
+      dhcp4: no
+      addresses:
+        - 192.168.1.111/24
+      gateway4: 192.168.1.1
+      nameservers:
+          addresses: [103.86.96.100, 103.86.99.100]
+  version: 2
+~~~
+apply the netplan config
+~~~
+netplan apply
+~~~
+Check the DNS has been applied
+~~~
+systemd-resolve --status | grep 'DNS Servers' -A1
 ~~~
 Below should provide the ip address for wireguard client config.
 ~~~
 ip route list default | cut -d " " -f9
-
+~~~
 if this doesn't work, try 
+~~~
 ip a
 ~~~
-Copy this ip or if you have a hostname you'd rather you, edit "HOSTNAMEorIPofGATEWAY"
+Copy this ip or if you have a hostname you'd rather use, edit "HOSTNAMEorIPofGATEWAY"
 ~~~
 sed -i "s|Endpoint = MYDNS.ORMY.IP|Endpoint = HOSTNAMEorIPofGATEWAY|g" wireguardadduser.sh 
 ~~~
-This will add your publick key to the client config
+This will add your public key to the client config
 ~~~
 sed -i "s|PublicKey = MYPUBKEY|PublicKey = $(cat publickey)|g" wireguardadduser.sh 
 ~~~
@@ -155,7 +183,7 @@ on boot, lets check our ip and country and see if our vpn has connected. If this
 curl ifconfig.co ; curl ifconfig.co/city ; curl ifconfig.co/country
 ~~~
 
-- Firewall rules for killswitch
+- FIREWALL RULES AND KILLSWITCH
 
 Lets clone this repo on the gateway, change directory, and provide necessary permissions for the scripts.
 ~~~
