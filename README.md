@@ -38,7 +38,7 @@ sudo su -
 ~~~
 Install openvpn and unzip and change directories
 ~~~
-apt-get install openvpn unzip
+apt install openvpn unzip
 cd /etc/openvpn
 ~~~
 Grab the server list from nordvpn. Check NordVPN website incase this link changes.
