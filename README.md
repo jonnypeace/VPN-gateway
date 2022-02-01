@@ -88,7 +88,7 @@ on boot, lets check our ip and country and see if our vpn has connected. If this
 curl ifconfig.co ; curl ifconfig.co/city ; curl ifconfig.co/country
 ~~~
 
-#Firewall rules for killswitch
+*Firewall rules for killswitch
 
 I've put in some firewall rules that can be copied to /etc/iptables
 This might not work well with UFW, i find it better to keep things simple and choose one over the other.
@@ -100,19 +100,14 @@ replace ens18 with your network interface, which can be found using...
 
 <pre>
 run this command:
-    ip a
+    ip route list table main default
 
-snipper of the output:
+snippet of the output:
+default via 192.168.1.1 dev <b>ens7</b> proto dhcp src <b>192.168.2.101</b> metric 100
 
-2: <b>ens18</b>: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
-    link/ether b6:c5:18:78:ea:40 brd ff:ff:ff:ff:ff:ff
-    inet <b>192.168.2.10/24</b> brd 192.168.2.255 scope global ens18
-       valid_lft forever preferred_lft forever
-    inet6 fe80::b4c5:18ff:fe78:ea40/64 scope link 
-       valid_lft forever preferred_lft forever
 </pre>
 
-replace the interface ens30 for one that is on your system
+replace the interface ens30 for one that is on your system.. output from above command was ens7
 <pre>
 sed -i 's|ens18|<b>ens30</b>|g' etc.iptables.rules.v4
 </pre>
