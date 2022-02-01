@@ -88,7 +88,7 @@ on boot, lets check our ip and country and see if our vpn has connected. If this
 curl ifconfig.co ; curl ifconfig.co/city ; curl ifconfig.co/country
 ~~~
 
-*Firewall rules for killswitch
+- Firewall rules for killswitch
 
 I've put in some firewall rules that can be copied to /etc/iptables
 This might not work well with UFW, i find it better to keep things simple and choose one over the other.
