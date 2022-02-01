@@ -145,6 +145,7 @@ sed -i 's|123.123.123.123/32|<b>10.10.0.0/32</b>|g' etc.iptables.rules.v4
 
 rules should be good now, so copy them to the correct directory, correctly labelled.
 ~~~
+mkdir -p /etc/iptables
 cp etc.iptables.rules.v4 /etc/iptables/rules.v4
 ~~~
 
