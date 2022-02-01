@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# This is optional, you may find your openvpn service stops. This script has been written for a crontab entry
+# to monitor connection status.
+# If you are like me, where openvpn occasionally drops connection,
+# then add this to a crontab and edit your openvpn systemctl service.
+
 # The Much simpler openvpn method, lets see how stable this is. 
 touch /root/vpn.log
 
