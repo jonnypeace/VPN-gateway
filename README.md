@@ -194,13 +194,19 @@ Android devices : Connections > More connection settings > VPN > settings icon >
 
 Windows devices : Not sure, but like i say, the wireguard app already hangs your connection. You could run wireshark and run some packet capture, or a traceroute alternative for windows, or ping 8.8.8.8 should confirm 100% packet loss.
 
-Linux Desktop : Once you're finished this tutorial, and have linux desktop connected. Shutdown the vpn-gateway, run the below command, nothing appears to escape. If you run this command before and after you'll see what it should look like. You can also try ping, and it will confirm 100% packet loss.
+Linux Desktop : Once you're finished this tutorial, and have linux desktop connected. Shutdown the vpn-gateway, run the below command, nothing appears to escape. If you run this command before and after you'll see what it should look like. You can also try ping, and it will confirm 100% packet loss, and also tcpdump.
 ~~~
 traceroute 8.8.8.8
 
 or
 
 ping -c1 8.8.8.8
+
+or
+
+sudo tcpdump
+
+I usually just get a bunch of arp requests looking for the vpn-gateway.
 ~~~
 
 Ok back to the VPN-Gateway Firewall rules & Killswitch
