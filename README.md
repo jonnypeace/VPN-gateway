@@ -257,8 +257,7 @@ If my interface is ens7
 sed -i 's|ens18|<b>ens7|g' etc.iptables.rules.v4
 </pre>
 
-replace "EDITME" (in the sed command below) with your lan address subnet (these rules only take into account home networks. If you're using a cloud VPS, you would use the public ip of your home to gain access, but not part of this readme - in my bashscripts repo, i have a script for updating firewall rules based on IP. It can easily be applied to iptables, but at the moment its ufw only. I'll update this in the future to include both options)
-WARNING: This is important to get right, as this rule whitelists you from the firewall, and will allow SSH/wireguard access
+WARNING: This is important to get right, as this rule whitelists your Lan from the firewall, and will allow SSH/wireguard access
 SUBNET HELP: A subnet from the ip address identified from the command above (in bold), would equate to...
 ~~~
 192.168.1.111/24 = 192.168.1.0/24 or 192.168.0.0/16 (/16 will provide more addresses than /24)
