@@ -337,13 +337,22 @@ There are ways which i'll let you search online, for checking dnsleaks in the te
 
 - VPN-Gateway SERVER SIDE TROUBLESHOOTING
 
-First of all, check with ping
+First thing to try out of everything else, is a system reboot
 ~~~
+reboot
+~~~
+We are going to use ping a lot, so best to start off with checking DNS so you know what to check as we troubleshoot.
+~~~
+If this works
+ping -c1 8.8.8.8
+
+and this doesn't
 ping -c1 google.com
+
+then it's probably DNS
 ~~~
 
-If you are having difficulty connecting to the outside with your vpn, check your VPN-gateway systemctl service. Replace uk2161 with the
-server config you chose above.
+Check your VPN-gateway systemctl service. Replace uk2161 with the server config you chose above.
 Some commands to try below
 ~~~
 systemctl status openvpn@uk2161.service
@@ -359,32 +368,25 @@ iptables -F
 Try ping now
 ~~~
 ping -c1 google.com
+ping -c1 8.8.8.8
 ~~~
 If there are still issues after iptables flushed, then there's maybe a problem with the openvpn config/credentials, or nordvpn server
-Try stopping and disabling the service.
+Try stopping and disabling the service while the firewall rules are flushed.
 ~~~
 systemctl stop openvpn@uk2161.service
 systemctl disable openvpn@uk2161.service
+ping -c1 google.com
+ping -c1 8.8.8.8
 ~~~
-If problems still persist, you could go through the start of this readme and try again, with another nordvpn server. 
+If this works, you could go through the start of this readme and try again, with another nordvpn server. 
 
-You could also flush iptables then save using the script provided (enter y at the prompt) so you start over, and upon reboot, you will have no firewall rules.
+If problems persist we can also flush iptables then save using the script provided (enter y at the prompt) so you start over, and upon reboot, you will have no firewall rules.
 ~~~
 systemctl disable openvpn@uk2161.service
 iptables -F
 ./ipRes.sh
 reboot
 ~~~
-If no internet after the above, send me a message with error messages. There could also be DNS issues, which you could check by...
-~~~
-If this works
-ping -c1 8.8.8.8
-
-and this doesn't
-ping -c1 google.com
-
-then it's probably DNS
-~~~
-
+This should be enough to clear everything and bring back your internet connection.
 
 Hope all went well & Happy VPN-Gatewaying :)
