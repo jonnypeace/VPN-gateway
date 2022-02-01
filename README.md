@@ -234,11 +234,11 @@ If my interface is ens7
 sed -i 's|ens18|<b>ens7|g' etc.iptables.rules.v4
 </pre>
 
-replace "EDITME" (in this sed command below) with your lan address subnet.
+replace "EDITME" (in the sed command below) with your lan address subnet (these rules only take into account home networks. If you're using a cloud VPS, you would use the public ip of your home to gain access, but not part of this readme - in my bashscripts repo, i have a script for updating firewall rules based on IP. It can easily be applied to iptables, but at the moment its ufw only. I'll update this in the future to include both options)
 WARNING: This is important to get right, as this rule whitelists you from the firewall, and will allow SSH/wireguard access
 SUBNET HELP: A subnet from the ip address identified from the command above (in bold), would equate to...
 ~~~
-192.168.2.10/24 = 192.168.2.0/24 or 192.168.0.0/16 (/16 will provide more addresses than /24)
+192.168.1.111/24 = 192.168.1.0/24 or 192.168.0.0/16 (/16 will provide more addresses than /24)
 
 For a better understanding, maybe have a look here. https://www.cloudflare.com/en-gb/learning/network-layer/what-is-a-subnet/
 
@@ -249,7 +249,7 @@ Now lets replace the "EDITME" (in this sed command) with your lan address subnet
 sed -i 's|192.168.0.0/16|<b>EDITME</b>|g' etc.iptables.rules.v4
 </pre>
 
-We need the nordvpn IP address we're connecting to in our uk config file, so...
+We need the nordvpn IP address we're connecting to in our uk config file. Remember to use the name of the config you chose.
 ~~~
 grep "^remote" /etc/openvpn/uk2161.conf | awk 'NR==1{print $2}'
 ~~~
@@ -305,4 +305,13 @@ Try ping now
 ~~~
 ping -c1 google.com
 ~~~
-If there are still issues after iptables flushed, then there's maybe a problem with the openvpn config/credentials, or nordvpn server, and the best i can offer at this point is to go through the start of this readme and try again, with another nordvpn server.
+If there are still issues after iptables flushed, then there's maybe a problem with the openvpn config/credentials, or nordvpn server, and the best i can offer at this point is to go through the start of this readme and try again, with another nordvpn server. 
+
+You could also flush iptables then save using the script provided (enter y at the prompt) so you start over, and upon reboot, you will have no firewall rules.
+~~~
+iptables -F
+./ipRes.sh
+reboot
+~~~
+
+Happy VPN-Gatewaying
