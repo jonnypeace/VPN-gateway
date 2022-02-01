@@ -95,9 +95,13 @@ i'll assume fresh install of Ubuntu with ufw disabled (and never been run).
 We'll need to edit the rules to match your system and not lock you out, so...
 replace ens18 with your network interface, which can be found using...
 <pre>
-ip a
 
-2: ens18: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+run this command:
+    ip a
+
+snipper of the output:
+
+2: <b>ens18</b>: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
     link/ether b6:c5:18:78:ea:40 brd ff:ff:ff:ff:ff:ff
     inet <b>192.168.2.10/24</b> brd 192.168.2.255 scope global ens18
        valid_lft forever preferred_lft forever
@@ -105,7 +109,12 @@ ip a
        valid_lft forever preferred_lft forever
 </pre>
 
-replace the 10.10.0.0 (in this sed command) with your lan address subnet.
+replace the interface ens19 for one that is on your system
+<pre>
+sed -i 's|ens18|<b>ens19</b>|g' etc.iptables.rules.v4
+</pre>
+
+replace the 10.10.0.0/24 (in this sed command) with your lan address subnet.
 <pre>
 sed -i 's|192.168.0.0/16|<b>10.10.0.0/24</b>|g' etc.iptables.rules.v4
 </pre>
