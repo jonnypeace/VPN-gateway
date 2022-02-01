@@ -35,7 +35,7 @@ sudo su -
 ~~~
 Install openvpn and unzip and change directories
 ~~~
-apt install openvpn unzip net-tools
+apt install openvpn unzip net-tools git curl
 cd /etc/openvpn
 ~~~
 Grab the server list from nordvpn. Check NordVPN website incase this link changes.
