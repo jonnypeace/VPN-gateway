@@ -24,46 +24,82 @@ Linux System Administrator, and Linux user since 2014, i don't have exposure to 
 
 ############################################################################
 
+- WIREGUARD
 
-Log into your server and Switch user to root. and install wireguard
-~~~
-sudo su
-apt install wireguard
-
-cd /etc/wireguard/
-umask 077; wg genkey | tee privatekey | wg pubkey > publickey
-
-echo "PrivateKey = $(cat privatekey)" >> wg0.conf
-
-sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
-
-sysctl -p
-
-ip route list default
-
-systemctl enable wg-quick@wg0
-systemctl status wg-quick@wg0
-
-wget https://raw.githubusercontent.com/jonnypeace/bashscripts/main/wireguardadduser.sh
-chmod 700 wireguardadduser.sh 
-history
-sed -i 's|DNS = 9.9.9.9|DNS = 103.86.96.100, 103.86.99.100|g' wireguardadduser.sh
-
-ip route list default | cut -d " " -f9
-
-sed -i "s|Endpoint = MYDNS.ORMY.IP|Endpoint = HOSTNAMEorIPofGATEWAY|g" wireguardadduser.sh 
-sed -i "s|PublicKey = MYPUBKEY|PublicKey = $(cat publickey)|g" wireguardadduser.sh 
-
-./wireguardadduser.sh 
-
-cat /etc/wireguard/wg0.conf
-cat /etc/wireguard/configs/jonny.conf
-This one needs copied to the desktop or mobile device. You can copy/paste the contents if no other means of getting
-the file off the server.
-~~~
+Log into your server and Switch user to root. install wireguard and change directory
 ~~~
 sudo su -
+apt install wireguard
+cd /etc/wireguard/
 ~~~
+Create keys
+~~~
+umask 077; wg genkey | tee privatekey | wg pubkey > publickey
+~~~
+Create new file and paste this into it.
+~~~
+[Interface]
+Address = 10.6.0.1/24
+ListenPort = 51820
+~~~
+Below command will include the pricate key in the wgo.conf.
+~~~
+echo "PrivateKey = $(cat privatekey)" >> wg0.conf
+~~~
+
+We need to uncomment (#) this line in /etc/sysctl.conf and update systctl
+~~~
+sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
+sysctl -p
+~~~
+By now, we can enable wireguard service.
+~~~
+systemctl enable wg-quick@wg0
+systemctl status wg-quick@wg0
+~~~
+This is a script from my bashscripts repository, which will help us add new users. 
+Also change permissions so the script can run.
+~~~
+wget https://raw.githubusercontent.com/jonnypeace/bashscripts/main/wireguardadduser.sh
+chmod 700 wireguardadduser.sh 
+~~~
+In this script we can update our DNS to use NordVPN
+~~~
+sed -i 's|DNS = 9.9.9.9|DNS = 103.86.96.100, 103.86.99.100|g' wireguardadduser.sh
+~~~
+Below should provide the ip address for wireguard client config.
+~~~
+ip route list default | cut -d " " -f9
+
+if this doesn't work, try 
+ip a
+~~~
+Copy this ip or if you have a hostname you'd rather you, edit "HOSTNAMEorIPofGATEWAY"
+~~~
+sed -i "s|Endpoint = MYDNS.ORMY.IP|Endpoint = HOSTNAMEorIPofGATEWAY|g" wireguardadduser.sh 
+~~~
+This will add your publick key to the client config
+~~~
+sed -i "s|PublicKey = MYPUBKEY|PublicKey = $(cat publickey)|g" wireguardadduser.sh 
+~~~
+
+Ok, the script should be ready to run, just folllow the prompts.
+~~~
+./wireguardadduser.sh 
+~~~
+Now that the script has finished, we should see an entry in wg0.conf
+~~~
+cat /etc/wireguard/wg0.conf
+~~~
+And we should have a config for the client/desktop/mobile device.
+~~~
+cat /etc/wireguard/configs/NAMEofYOUR.conf
+~~~
+This .conf needs copied to the desktop or mobile device. You can copy/paste the contents if you have no other means of getting
+the file off the server.
+
+- OPENVPN
+
 Install openvpn and unzip and change directories
 ~~~
 apt install openvpn unzip net-tools git curl
