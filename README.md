@@ -188,7 +188,7 @@ curl ifconfig.co ; curl ifconfig.co/city ; curl ifconfig.co/country
 
 - FIREWALL RULES AND KILLSWITCH
 
-Ok, i'll get this out of the way first. Wireguard clients (mobile devices/desktops) themselves don't have a killswitch but the wireguard application tends to hang your connection. I've never tested how long this hangs for, BUT there are ways to check.
+Ok, i'll get this out of the way first. Wireguard clients (mobile devices/desktops) themselves don't have a killswitch but the wireguard application tends to hang your connection BUT there are ways to check. I've never tested how long this hangs for, but it seems permanent until intervention occurs.
 
 Android devices : Connections > More connection settings > VPN > settings icon > Always-on VPN & Block connections without VPN.
 
