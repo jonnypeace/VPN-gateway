@@ -351,6 +351,15 @@ ping -c1 google.com
 
 then it's probably DNS
 ~~~
+If its your DNS and all you've done is follow this readme, take a look at the yaml / netplan part of this readme. Worst comes to worst, return the yaml to DHCP, and remove the nameservers, addresses and gateway
+~~~
+# This is the network config written by 'subiquity'
+network:
+  ethernets:
+    ens3:
+      dhcp4: yes
+  version: 2
+~~~
 
 Check your VPN-gateway systemctl service. Replace uk2161 with the server config you chose above.
 Some commands to try below
