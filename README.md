@@ -36,7 +36,11 @@ Create keys
 ~~~
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 ~~~
-Create new file and paste this into it.
+Create new file..
+~~~
+nano /etc/wireguard/wg0.conf
+~~~
+Paste this into it
 ~~~
 [Interface]
 Address = 10.6.0.1/24
@@ -46,7 +50,6 @@ Below command will include the private key in the wgo.conf.
 ~~~
 echo "PrivateKey = $(cat privatekey)" >> wg0.conf
 ~~~
-
 We need to uncomment (#) this line in /etc/sysctl.conf and update systctl
 ~~~
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
@@ -64,7 +67,7 @@ Also change permissions so the script can run.
 wget https://raw.githubusercontent.com/jonnypeace/bashscripts/main/wireguardadduser.sh
 chmod 700 wireguardadduser.sh 
 ~~~
-In this script we can update our DNS to use NordVPN - this is client side only. 
+In this script we can update our DNS to use NordVPN - this is client side only. No edit necessary
 ~~~
 sed -i 's|DNS = 9.9.9.9|DNS = 103.86.96.100, 103.86.99.100|g' wireguardadduser.sh
 ~~~
@@ -72,7 +75,7 @@ To update the NordVPN dns on the server, i use netplan yaml to configure.
 ~~~
 nano /etc/netplan/00-installer-config.yaml # (your yaml might be named differently)
 
-Spacing is quite important in yaml, and it should look something like this.
+Spacing is quite important in yaml, and it should look something like this. Update your gateway & addresses. Nameservers included here are of NordVPN.
 
 # This is the network config written by 'subiquity'
 network:
@@ -102,11 +105,11 @@ if this doesn't work, try
 ~~~
 ip a
 ~~~
-Copy this ip or if you have a hostname you'd rather use, edit "HOSTNAMEorIPofGATEWAY"
+Replace "HOSTNAMEorIPofGATEWAY" with the IP above
 ~~~
 sed -i "s|Endpoint = MYDNS.ORMY.IP|Endpoint = HOSTNAMEorIPofGATEWAY|g" wireguardadduser.sh 
 ~~~
-This will add your public key to the client config
+This will add your public key to the client config, no edit necessary
 ~~~
 sed -i "s|PublicKey = MYPUBKEY|PublicKey = $(cat publickey)|g" wireguardadduser.sh 
 ~~~
@@ -128,7 +131,7 @@ the file off the server.
 
 - OPENVPN
 
-Install openvpn and unzip and change directories
+Install openvpn, unzip, net-tools and curl and change directories
 ~~~
 apt install openvpn unzip net-tools git curl
 cd /etc/openvpn
