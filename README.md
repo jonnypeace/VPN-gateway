@@ -119,6 +119,16 @@ replace the 10.10.0.0/24 (in this sed command) with your lan address subnet.
 sed -i 's|192.168.0.0/16|<b>10.10.0.0/24</b>|g' etc.iptables.rules.v4
 </pre>
 
+We need the nordvpn IP address we're connecting to in our uk config file, so...
+~~~
+grep "^remote" /etc/openvpn/uk2161.conf | awk 'NR==1{print $2}'
+~~~
+
+Now use this ip to replace (10.10.0.0/32) with the ip address in the from the output above
+<pre>
+sed -i 's|123.123.123.123/32|<b>10.10.0.0/32</b>|g' etc.iptables.rules.v4
+</pre>
+
 Copy the rules to directory
 ~~~
 cp etc.iptables.rules.v4 /etc/iptables/rules.v4
