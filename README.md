@@ -105,9 +105,9 @@ ip a
        valid_lft forever preferred_lft forever
 ~~~
 replace the second instance of 192.168.0.0/16 (in this sed command) with your lan address subnet.
-~~~
-sed -i 's|-A INPUT -s 192.168.0.0/16 -i ens18 -j ACCEPT|-A INPUT -s **192.168.0.0/16** -i **ens18** -j ACCEPT|' etc.iptables.rules.v4
-~~~
+<pre>
+sed -i 's|-A INPUT -s 192.168.0.0/16 -i ens18 -j ACCEPT|-A INPUT -s <b>192.168.0.0/16</b> -i <b>ens18</b> -j ACCEPT|' etc.iptables.rules.v4
+</pre>
 
 Copy the rules to directory
 ~~~
