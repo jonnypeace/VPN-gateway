@@ -296,7 +296,7 @@ systemctl enable openvpn@uk2161.service
 systemctl start openvpn@uk2161.service
 systemctl restart openvpn@uk2161.service
 ~~~
-If the service is active & enabled it's probably your firewall rules.
+If the service is active & enabled it could be your firewall rules.
 ~~~
 This will flush your rules.
 iptables -F
@@ -305,7 +305,13 @@ Try ping now
 ~~~
 ping -c1 google.com
 ~~~
-If there are still issues after iptables flushed, then there's maybe a problem with the openvpn config/credentials, or nordvpn server, and the best i can offer at this point is to go through the start of this readme and try again, with another nordvpn server. 
+If there are still issues after iptables flushed, then there's maybe a problem with the openvpn config/credentials, or nordvpn server
+Try stopping and disabling the service.
+~~~
+systemctl stop openvpn@uk2161.service
+systemctl disable openvpn@uk2161.service
+~~~
+If problems still persist, you could go through the start of this readme and try again, with another nordvpn server. 
 
 You could also flush iptables then save using the script provided (enter y at the prompt) so you start over, and upon reboot, you will have no firewall rules.
 ~~~
@@ -314,4 +320,4 @@ iptables -F
 reboot
 ~~~
 
-Happy VPN-Gatewaying
+Hope all went well & Happy VPN-Gatewaying :)
