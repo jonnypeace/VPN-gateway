@@ -189,8 +189,11 @@ curl ifconfig.co ; curl ifconfig.co/city ; curl ifconfig.co/country
 - FIREWALL RULES AND KILLSWITCH
 
 Ok, i'll get this out of the way first. Wireguard clients (mobile devices/desktops) themselves don't have a killswitch but the wireguard application tends to hang your connection. I've never tested how long this hangs for, BUT there are ways to check.
+
 Android devices : Connections > More connection settings > VPN > settings icon > Always-on VPN & Block connections without VPN.
-Windows devices : Not sure, but like i say, the wireguard app already hangs your connection. You could run wireshark and run some packet capture, or a traceroute alternative for windows, or ping google.com should confirm 100% packet loss.
+
+Windows devices : Not sure, but like i say, the wireguard app already hangs your connection. You could run wireshark and run some packet capture, or a traceroute alternative for windows, or ping 8.8.8.8 should confirm 100% packet loss.
+
 Linux Desktop : Once you're finished this tutorial, and have linux desktop connected. Shutdown the vpn-gateway, run the below command, nothing appears to escape. If you run this command before and after you'll see what it should look like. You can also try ping, and it will confirm 100% packet loss.
 ~~~
 traceroute 8.8.8.8
