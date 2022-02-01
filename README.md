@@ -254,7 +254,7 @@ replace "EDITME" with the correct interface on your system.. i.e. the output fro
 sed -i 's|ens18|<b>EDITME</b>|g' etc.iptables.rules.v4
 
 If my interface is ens7
-sed -i 's|ens18|<b>ens7|g' etc.iptables.rules.v4
+sed -i 's|ens18|<b>ens7</b>|g' etc.iptables.rules.v4
 </pre>
 
 WARNING: This is important to get right, as this rule whitelists your Lan from the firewall, and will allow SSH/wireguard access
