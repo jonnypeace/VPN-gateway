@@ -323,7 +323,7 @@ An easy way to bring the connection up or down
 ~~~
 sudo wg-quick down wg0
 sudo wg-quick up wg0
-___
+~~~
 This command shows the status
 ~~~
 sudo wg
