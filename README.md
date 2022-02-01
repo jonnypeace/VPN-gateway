@@ -105,7 +105,7 @@ if this doesn't work, try
 ~~~
 ip a
 ~~~
-Replace "HOSTNAMEorIPofGATEWAY" with the IP above
+Replace "HOSTNAMEorIPofGATEWAY" with the IP above (the above ip is for home use, if you're using a VPS, it will be the hostname or public ip you use to SSH into the server)
 ~~~
 sed -i "s|Endpoint = MYDNS.ORMY.IP|Endpoint = HOSTNAMEorIPofGATEWAY|g" wireguardadduser.sh 
 ~~~
