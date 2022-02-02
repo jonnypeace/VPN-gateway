@@ -67,7 +67,7 @@ Also change permissions so the script can run.
 wget https://raw.githubusercontent.com/jonnypeace/bashscripts/main/wireguardadduser.sh
 chmod 700 wireguardadduser.sh 
 ~~~
-In this script we can update our DNS to use NordVPN - this is client side only. No edit necessary
+In this sed command we can update our DNS to use NordVPN (help with dns leaks) - this is client side only.
 ~~~
 sed -i 's|DNS = 9.9.9.9|DNS = 103.86.96.100, 103.86.99.100|g' wireguardadduser.sh
 ~~~
