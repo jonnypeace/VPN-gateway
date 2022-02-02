@@ -279,7 +279,7 @@ grep "^remote" /etc/openvpn/uk2161.conf | awk 'NR==1{print $2}'
 
 Now use this ip to replace "EDITME" 
 <pre>
-sed -i 's|123.123.123.123/32|<b>EDITME</b>|g' etc.iptables.rules.v4
+sed -i 's|123.123.123.123|<b>EDITME</b>|g' etc.iptables.rules.v4
 </pre>
 
 rules should be good now, so copy them to the correct directory, and correctly labelled.
