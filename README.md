@@ -19,8 +19,7 @@ So, a quick flow diagram....
 
 Phone/pc device with wireguard client >> VPN Gateway, with wireguard server traffic coming in >> VPN gateway with NORD VPN traffic going out.
 
-I've taken a collection of firewall rules gathered from sources on github, and would welcome any critique / additional rules. Since i'm a learning
-Linux System Administrator, and Linux user since 2014, i don't have exposure to Enterprise firewall rules, but all in good time. The rules collected are all DROP/REJECT and i'll be honest, if you use my iptables rules, they never get touched so some of them could probably be removed. I suppose they might be more useful in a cloud VPS where there's no hardware firewall between the server and internet.
+The firewall used for iptables is a stateless firewall, something i've been debating with myself over the months and settled with. Feel free to send me a message with any pro's and con's on this.
 
 ############################################################################
 
